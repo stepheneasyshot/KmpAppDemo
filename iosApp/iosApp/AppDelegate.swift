@@ -44,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-
     // 当应用即将进入后台
     func applicationWillResignActive(_ application: UIApplication) {
     }

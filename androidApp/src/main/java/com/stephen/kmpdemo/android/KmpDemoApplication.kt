@@ -3,6 +3,7 @@ package com.stephen.kmpdemo.android
 import android.app.Application
 import com.tencent.bugly.crashreport.CrashReport
 
+
 class KmpDemoApplication : Application() {
 
     override fun onCreate() {
