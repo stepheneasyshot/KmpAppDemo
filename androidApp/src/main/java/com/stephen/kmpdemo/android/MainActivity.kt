@@ -1,7 +1,6 @@
 package com.stephen.kmpdemo.android
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -27,31 +26,36 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme {
+                StickyHeaderExample()
+            }
+        }
+    }
+}
 
-                val scrollState = rememberLazyListState()
+@Composable
+fun App() {
 
-                LaunchedEffect(scrollState.isScrollInProgress) {
-                    if (scrollState.isScrollInProgress) {
-                        LooperMsgListener.startCheckFrameTime()
-                    } else {
-                        LooperMsgListener.stopCheckFrameTime()
-                    }
-                }
+    val scrollState = rememberLazyListState()
 
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth(1f),
-                        state = scrollState,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        items(testItemList) {
-                            Text(text = it, modifier = Modifier.padding(vertical = 5.dp))
-                        }
-                    }
-                }
+    LaunchedEffect(scrollState.isScrollInProgress) {
+        if (scrollState.isScrollInProgress) {
+            LooperMsgListener.startCheckFrameTime()
+        } else {
+            LooperMsgListener.stopCheckFrameTime()
+        }
+    }
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(1f),
+            state = scrollState,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(testItemList) {
+                Text(text = it, modifier = Modifier.padding(vertical = 5.dp))
             }
         }
     }
