@@ -1,32 +1,34 @@
 package com.stephen.kmpdemo.android
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.stephen.kmpdemo.createACrash
+import androidx.compose.ui.unit.sp
+import com.google.ai.edge.aicore.DownloadCallback
+import com.google.ai.edge.aicore.DownloadConfig
+import com.google.ai.edge.aicore.GenerativeModel
+import com.google.ai.edge.aicore.content
+import com.google.ai.edge.aicore.generationConfig
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme {
-                StickyHeaderExample()
+                App()
             }
         }
     }
@@ -34,258 +36,62 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App() {
-
-    val scrollState = rememberLazyListState()
-
-    LaunchedEffect(scrollState.isScrollInProgress) {
-        if (scrollState.isScrollInProgress) {
-            LooperMsgListener.startCheckFrameTime()
-        } else {
-            LooperMsgListener.stopCheckFrameTime()
-        }
-    }
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize(1f)
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(1f),
-            state = scrollState,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            items(testItemList) {
-                Text(text = it, modifier = Modifier.padding(vertical = 5.dp))
-            }
-        }
+        Text(
+            text = "Hello, World!",
+            fontSize = 40.sp,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .clickable {
+                    test()
+                })
     }
 }
 
-val testItemList = listOf(
-    "a",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-)
+fun test() {
+    Log.i("MainActivity", "test Hello, World!")
+    val generationConfig = generationConfig {
+        context = appContext
+        temperature = 0.2f
+        topK = 16
+        maxOutputTokens = 256
+    }
+    val downloadCallback = object : DownloadCallback {
+        override fun onDownloadProgress(totalBytesDownloaded: Long) {
+            super.onDownloadProgress(totalBytesDownloaded)
+            Log.i("MainActivity", "onDownloadProgress: $totalBytesDownloaded")
+        }
+    }
+    val downloadConfig = DownloadConfig(downloadCallback)
+    val generativeModel = GenerativeModel(
+        generationConfig = generationConfig,
+        downloadConfig = downloadConfig // optional
+    )
+    CoroutineScope(Dispatchers.IO).launch {
+        // Single string input prompt
+        val input = "使用中文介绍一下你自己"
+        val response = generativeModel.generateContent(input)
+        Log.i("MainActivity", "${response.text}")
 
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text, modifier = Modifier.clickable {
-//        Thread.sleep(7000L)
-        createACrash()
-    })
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        GreetingView("Hello, Android!")
+        // Or multiple strings as input
+//        val response2 = generativeModel.generateContent(
+//            content {
+//                text(
+//                    "I want you to act as an English proofreader. I will provide you texts\n" +
+//                            "                        and I would like you to review them for any spelling, grammar, or\n" +
+//                            "                        punctuation errors."
+//                )
+//                text(
+//                    "Once you have finished reviewing the text, provide me with any\n" +
+//                            "                        necessary corrections or suggestions for improving the text:"
+//                )
+//                text("These arent the droids your looking for.")
+//            }
+//        )
+//        Log.i("MainActivity", "${response2.text}")
     }
 }
